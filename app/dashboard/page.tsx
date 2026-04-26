@@ -346,9 +346,9 @@ export default function Dashboard() {
                     tick={{ fill: '#71717a', fontSize: 12 }} 
                     dy={10}
                   />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#000', border: '1px solid #333', borderRadius: '8px' }} 
-                    formatter={(value: number) => [`+${value}%`, 'Growth']}
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#000', border: '1px solid #333', borderRadius: '8px' }}
+                    formatter={(value) => value !== undefined ? [`+${value}%`, 'Growth'] : ['N/A', 'Growth']}
                   />
                   <Area type="monotone" dataKey="growth" stroke="#10b981" strokeWidth={3} fill="url(#colorGrowth)" />
                 </AreaChart>
