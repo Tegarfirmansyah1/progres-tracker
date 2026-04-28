@@ -5,6 +5,7 @@
  */
 'use client';
 
+import Image from 'next/image';
 import React from 'react';
 import { 
   ArrowRight, 
@@ -26,7 +27,14 @@ export default function LandingPage() {
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center gap-2">
               <div className="bg-[#4CB648] p-1.5 rounded-sm">
-                <Zap className="w-5 h-5 text-white fill-current" />
+                <Image 
+                      src="/uply.png" 
+                      alt="Uply Logo"
+                      width={20}  
+                      height={20}
+                      className="object-contain"
+                      priority 
+                    />
               </div>
               <span className="text-[#4CB648] font-black text-2xl tracking-tighter uppercase italic">
                 UPLY
@@ -38,8 +46,8 @@ export default function LandingPage() {
               <a href="#" className="text-zinc-600 hover:text-[#4CB648]">Komunitas</a>
             </div>
             <div className="flex items-center gap-4">
-              <a href="/login" className="text-sm font-bold hover:text-[#4CB648]">Log In</a>
-              <a href="/login" className="bg-[#4CB648] text-white px-5 py-2 rounded text-sm font-bold uppercase hover:bg-[#e34402] transition-colors">
+              <a href="/login" className="bg-[#ffffff] text-black px-5 py-2 rounded text-sm font-bold uppercase hover:text-white hover:bg-[#047200] transition-colors">Log In</a>
+              <a href="/login" className="bg-[#4CB648] text-white px-5 py-2 rounded text-sm font-bold uppercase hover:bg-[#047200] transition-colors">
                 Daftar Gratis
               </a>
             </div>
@@ -60,7 +68,7 @@ export default function LandingPage() {
               Bergabunglah dengan jutaan orang yang melacak progres 1% mereka setiap hari. Dari lari pagi hingga sesi belajar larut malam—jadikan setiap usaha berharga.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="/login" className="bg-[#4CB648] text-white px-8 py-4 rounded text-lg font-bold uppercase flex items-center justify-center gap-2 hover:bg-[#e34402] shadow-xl shadow-orange-500/20">
+              <a href="/login" className="bg-[#4CB648] text-white px-8 py-4 rounded text-lg font-bold uppercase flex items-center justify-center gap-2 hover:bg-[#047200] shadow-xl shadow-orange-500/20">
                 Mulai Sekarang <ChevronRight className="w-5 h-5" />
               </a>
             </div>
@@ -110,10 +118,17 @@ export default function LandingPage() {
       <footer className="bg-white py-12 border-t border-zinc-100">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <div className="flex justify-center items-center gap-2 mb-6">
-            <Zap className="w-6 h-6 text-[#4CB648] fill-current" />
+            <Image 
+                      src="/uply.png" 
+                      alt="Uply Logo"
+                      width={20}  
+                      height={20}
+                      className="object-contain"
+                      priority 
+                    />
             <span className="font-black text-xl italic tracking-tighter uppercase">UPLY</span>
           </div>
-          <p className="text-zinc-400 text-sm italic">&copy; 2024 UPLY ADVENTURE TRACKER. SEMUA USAHA BERHARGA.</p>
+          <p className="text-zinc-400 text-sm italic">&copy; 2026 UPLY PROGRES TRACKER. 1% LEBIH BAIK.</p>
         </div>
       </footer>
     </div>

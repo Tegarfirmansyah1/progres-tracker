@@ -1,68 +1,180 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Zap, Loader2, Mail, Lock } from 'lucide-react';
+import { Loader2, ArrowRight } from 'lucide-react';
+
+import { supabase } from '@/lib/supabase'; 
 import Image from 'next/image';
 
 export default function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    if (!email || !password) {
+      return alert("Email dan Password tidak boleh kosong!");
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) throw error;
+
       window.location.href = '/dashboard';
-    }, 1500);
+
+    } catch (error: unknown) {
+      // Tangkap dan tampilkan pesan error dengan aman
+      const errorMessage = error instanceof Error ? error.message : 'Terjadi kesalahan saat login.';
+      alert(`Gagal Login: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+
+    try {
+      // Proses autentikasi OAuth Google ke Supabase
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          // Supabase akan mengarahkan user kembali ke URL ini setelah login sukses
+          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : undefined
+        }
+      });
+
+      if (error) throw error;
+      
+      // Catatan: Tidak perlu redirect manual di sini karena signInWithOAuth 
+      // akan otomatis melempar user ke halaman Google.
+
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Terjadi kesalahan saat menghubungi Google.';
+      alert(`Gagal Login dengan Google: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex items-center justify-center p-6 font-sans">
-      <div className="w-full max-w-md bg-white border border-zinc-200 p-8 rounded-sm shadow-xl">
-        <div className="flex flex-col items-center mb-10">
-          <div className="bg-[#4CB648] p-2 rounded-sm mb-4">
-             <Image 
-                  src="/uply.png" 
-                  alt="Uply Logo"
-                  width={32}  
-                  height={32}
-                  className="object-contain w-8 h-8 text-white fill-current"
-                  priority 
-                />
-          </div>
-          <h2 className="text-3xl font-black italic uppercase tracking-tighter text-zinc-900">UPLY</h2>
-          <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mt-1">Progres Tracker</p>
+    <div className="min-h-screen bg-zinc-50 flex flex-col justify-center items-center font-sans p-6">
+      
+      {/* Logo Header */}
+      <div className="flex items-center gap-2 mb-10">
+        <div className="bg-[#4CB648] p-2 rounded-sm shadow-lg shadow-orange-500/30">
+          <Image 
+                src="/uply.png" 
+                alt="Uply Logo"
+                width={24}  
+                height={24}
+                className="object-contain"
+                priority 
+              />
+        </div>
+        <span className="font-black italic text-4xl tracking-tighter uppercase text-zinc-900">
+          UPLY
+        </span>
+      </div>
+
+      {/* Kotak Form Login */}
+      <div className="w-full max-w-md bg-white border border-zinc-200 p-8 md:p-10 rounded-sm shadow-xl">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-black italic uppercase tracking-tight text-zinc-900">
+            MASUK KE BASECAMP
+          </h1>
+          <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-2">
+            Lanjutkan petualangan 1% Anda hari ini.
+          </p>
         </div>
 
-        <button className="w-full bg-white border-2 border-zinc-200 py-3 rounded-sm font-bold text-sm flex items-center justify-center gap-3 hover:bg-zinc-50 transition-colors mb-6">
-          <svg viewBox="0 0 24 24" className="w-5 h-5"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"/></svg>
-          LANJUTKAN DENGAN GOOGLE
-        </button>
-
-        <div className="relative mb-8 text-center">
-          <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-zinc-100"></div></div>
-          <span className="relative px-4 bg-white text-[10px] font-black text-zinc-400 uppercase tracking-widest">Atau Email</span>
-        </div>
-
-        <form className="space-y-4" onSubmit={handleLogin}>
-          <div className="relative">
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-            <input type="email" placeholder="EMAIL" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 pl-12 rounded-sm font-bold text-sm focus:border-[#4CB648] outline-none transition-colors" />
+        <form onSubmit={handleLogin} className="space-y-6">
+          {/* Input Email */}
+          <div>
+            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">
+              Alamat Email
+            </label>
+            <input 
+              type="email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="atlet@uplay.app"
+              className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
+            />
           </div>
-          <div className="relative">
-            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-            <input type="password" placeholder="PASSWORD" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 pl-12 rounded-sm font-bold text-sm focus:border-[#4CB648] outline-none transition-colors" />
+
+          {/* Input Password */}
+          <div>
+            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">
+              Kata Sandi
+            </label>
+            <input 
+              type="password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
+            />
           </div>
-          <button disabled={loading} className="w-full bg-[#4CB648] text-white p-4 rounded-sm font-black italic uppercase tracking-widest shadow-lg shadow-orange-500/20 flex justify-center items-center gap-2">
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : (isLogin ? 'LOG IN' : 'DAFTAR')}
+
+          {/* Tombol Submit */}
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            className="w-full bg-zinc-900 text-white p-4 font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 hover:bg-black transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <ArrowRight className="w-5 h-5" />
+            )} 
+            {isLoading ? 'MEMVERIFIKASI...' : 'MULAI PETUALANGAN'}
           </button>
         </form>
 
-        <p className="mt-8 text-center text-xs font-bold text-zinc-400 uppercase tracking-widest">
-          {isLogin ? "Belum punya akun?" : "Sudah punya akun?"} <button onClick={() => setIsLogin(!isLogin)} className="text-[#4CB648] hover:underline underline-offset-4 ml-1">KLIK DI SINI</button>
-        </p>
+     {/* Pemisah (Divider) */}
+        <div className="mt-8 relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-zinc-100"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-3 bg-white text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+              Atau lanjutkan dengan
+            </span>
+          </div>
+        </div>
+
+        {/* Tombol Login Google */}
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          disabled={isLoading}
+          className="mt-6 w-full bg-white border-2 border-zinc-100 hover:bg-zinc-50 hover:border-zinc-200 text-zinc-900 p-4 font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
+            <path d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z" fill="#EA4335" />
+            <path d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z" fill="#4285F4" />
+            <path d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z" fill="#FBBC05" />
+            <path d="M12.0004 24.0001C15.2404 24.0001 17.9654 22.935 19.9454 21.095L16.0804 18.095C15.0054 18.82 13.6204 19.245 12.0004 19.245C8.8704 19.245 6.21537 17.135 5.26538 14.29L1.27539 17.385C3.25539 21.31 7.3104 24.0001 12.0004 24.0001Z" fill="#34A853" />
+          </svg>
+          Google
+        </button>
+
       </div>
+      
+      {/* Footer / Info Tambahan */}
+      <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-8">
+        Belum punya akun? <a href="/register" className="text-[#FC4C02] hover:underline">Daftar di sini</a>
+      </p>
+
     </div>
   );
 }
