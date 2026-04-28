@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Progres Tracker",
+  title: "Uply Progres Tracker",
   description: "Track your progress with easy",
   icons: {
     icon: [
