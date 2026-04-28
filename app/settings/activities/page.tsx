@@ -258,7 +258,7 @@ export default function SettingsPage() {
               <div>
                 <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Warna Tema</label>
                 <div className="flex gap-3">
-                  {['bg-[#4CB648]', 'bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-zinc-900'].map(color => (
+                  {['bg-[#4CB648]', 'bg-[#FC4C02]','bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-zinc-900'].map(color => (
                     <button key={color} type="button" onClick={() => setNewBarColor(color)} className={`w-10 h-10 rounded-full ${color} transition-all ${newBarColor === color ? 'ring-4 ring-zinc-300 ring-offset-2 scale-110' : 'hover:scale-110 opacity-70 hover:opacity-100'}`} />
                   ))}
                 </div>
