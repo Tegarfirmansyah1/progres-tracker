@@ -123,7 +123,7 @@ export default function AddLogPage() {
   return (
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="add_log" />
-      <main className="flex-1 p-6 md:p-12 max-w-4xl mx-auto w-full">
+      <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
         <header className="mb-12">
           <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none">CATAT <br /><span className="text-[#4CB648]">PETUALANGAN</span></h1>
           <p className="text-zinc-500 text-xs font-black tracking-widest uppercase mt-4">Rekam usahamu. Biarkan sistem menghitung progresnya.</p>

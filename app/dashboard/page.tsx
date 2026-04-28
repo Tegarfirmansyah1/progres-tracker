@@ -204,7 +204,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="dashboard" />
       
-      <main className="flex-1 p-6 md:p-12 max-w-5xl mx-auto w-full">
+      <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <h1 className="text-5xl font-black italic uppercase tracking-tighter leading-none">

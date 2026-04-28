@@ -172,7 +172,7 @@ export default function LoginPage() {
       
       {/* Footer / Info Tambahan */}
       <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-8">
-        Belum punya akun? <a href="/register" className="text-[#FC4C02] hover:underline">Daftar di sini</a>
+        Belum punya akun? <a href="/register" className="text-[#4CB648] hover:underline">Daftar di sini</a>
       </p>
 
     </div>

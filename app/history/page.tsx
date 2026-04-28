@@ -111,7 +111,7 @@ export default function HistoryPage() {
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="history" />
       
-      <main className="flex-1 p-6 md:p-12 max-w-4xl mx-auto w-full">
+      <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 border-b border-zinc-200 pb-8">
           <div>
             <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none">

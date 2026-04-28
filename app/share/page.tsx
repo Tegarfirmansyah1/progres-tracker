@@ -169,7 +169,7 @@ export default function SharePage() {
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="share" />
       
-      <main className="flex-1 p-6 md:p-12 max-w-5xl mx-auto w-full flex flex-col lg:flex-row gap-12">
+      <main className="flex-1 p-6 pb-24 md:p-12 max-w-5xl mx-auto w-full flex flex-col lg:flex-row gap-12">
         
         {/* Kolom Kiri: Informasi & Kontrol */}
         <div className="flex-1">

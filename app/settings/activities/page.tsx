@@ -226,7 +226,7 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="settings" />
-      <main className="flex-1 p-6 md:p-12 max-w-6xl mx-auto w-full">
+      <main className="flex-1 p-6 pb-24 md:p-12 max-w-6xl mx-auto w-full">
         <header className="mb-12 border-b border-zinc-200 pb-8">
           <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none mb-4">
             PENGATURAN <br /><span className="text-zinc-400">SISTEM</span>
@@ -259,7 +259,7 @@ export default function SettingsPage() {
                 <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Warna Tema</label>
                 <div className="flex gap-3">
                   {['bg-[#4CB648]', 'bg-[#FC4C02]','bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-zinc-900'].map(color => (
-                    <button key={color} type="button" onClick={() => setNewBarColor(color)} className={`w-10 h-10 rounded-full ${color} transition-all ${newBarColor === color ? 'ring-4 ring-zinc-300 ring-offset-2 scale-110' : 'hover:scale-110 opacity-70 hover:opacity-100'}`} />
+                    <button key={color} type="button" onClick={() => setNewBarColor(color)} className={`w-7 h-7 rounded-full ${color} transition-all ${newBarColor === color ? 'ring-4 ring-zinc-300 ring-offset-2 scale-110' : 'hover:scale-110 opacity-70 hover:opacity-100'}`} />
                   ))}
                 </div>
               </div>
