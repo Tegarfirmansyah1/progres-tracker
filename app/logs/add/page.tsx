@@ -125,8 +125,8 @@ export default function AddLogPage() {
       <Sidebar activePage="add_log" />
       <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
         <header className="mb-12">
-          <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none">CATAT <br /><span className="text-[#4CB648]">PETUALANGAN</span></h1>
-          <p className="text-zinc-500 text-xs font-black tracking-widest uppercase mt-4">Rekam usahamu. Biarkan sistem menghitung progresnya.</p>
+          <h1 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase leading-none">CATAT <br /><span className="text-[#4CB648]">PETUALANGAN</span></h1>
+          <p className="text-zinc-500 text-[10px] md:text-[12px] font-black tracking-widest uppercase mt-4">Rekam usahamu. Biarkan sistem menghitung progresnya.</p>
         </header>
 
         <form className="bg-white p-8 md:p-12 border border-zinc-200 rounded-sm shadow-sm space-y-10 relative overflow-hidden" onSubmit={handleSubmit}>
@@ -136,7 +136,7 @@ export default function AddLogPage() {
           )}
 
           <div className="space-y-4">
-            <label className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">Pilih Aktivitas yang Telah Didaftarkan</label>
+            <label className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.2em] text-zinc-400">Pilih Aktivitas yang Telah Didaftarkan</label>
             <div className="relative">
               <select 
                 value={selectedActivityId}
@@ -144,7 +144,7 @@ export default function AddLogPage() {
                   setSelectedActivityId(e.target.value);
                   setInputValue('');
                 }}
-                className="w-full appearance-none bg-zinc-50 border-2 border-zinc-100 p-5 rounded-sm font-bold text-zinc-800 focus:border-[#4CB648] outline-none transition-colors"
+                className="w-full appearance-none bg-zinc-50 border-2 border-zinc-100 p-5 rounded-sm text-[8px] md:text-[10px] font-bold text-zinc-800 focus:border-[#4CB648] outline-none transition-colors"
               >
                 <option value="" disabled>-- PILIH AKTIVITAS --</option>
                 {activities.map(act => {
@@ -155,7 +155,7 @@ export default function AddLogPage() {
                   );
                 })}
               </select>
-              <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400 pointer-events-none" />
+              <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-3 h-3 md:w-5 md:h-5 text-zinc-400 pointer-events-none" />
             </div>
             
             {activities.length === 0 && (
@@ -169,13 +169,13 @@ export default function AddLogPage() {
             <div className="flex flex-col md:flex-row gap-4 p-4 bg-zinc-50 border border-zinc-100 rounded-sm">
               <div className="flex items-center gap-2 flex-1">
                 <Target className="w-4 h-4 text-zinc-400" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500">
                   Target Bar: <span className="text-zinc-900">{parentBar.name}</span>
                 </span>
               </div>
               <div className="flex items-center gap-2 flex-1">
                 <Activity className="w-4 h-4 text-zinc-400" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500">
                   Konversi: <span className="text-[#4CB648]">1 {activeActivity.unit} = {activeActivity.weight}%</span>
                 </span>
               </div>
@@ -183,7 +183,7 @@ export default function AddLogPage() {
           )}
 
           <div className="space-y-4 opacity-100 transition-opacity" style={{ opacity: selectedActivityId ? 1 : 0.5, pointerEvents: selectedActivityId ? 'auto' : 'none' }}>
-            <label className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">Pencapaian (Nilai)</label>
+            <label className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Pencapaian (Nilai)</label>
             <div className="flex gap-4">
               <input 
                 type="number" 
@@ -192,9 +192,9 @@ export default function AddLogPage() {
                 placeholder={selectedActivityId ? "0.0" : "Pilih aktivitas dulu"}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value === '' ? '' : Number(e.target.value))}
-                className="flex-1 bg-zinc-50 border-2 border-zinc-100 p-5 rounded-sm font-black text-3xl focus:border-[#4CB648] outline-none transition-colors" 
+                className="flex-1 bg-zinc-50 border-2 border-zinc-100 p-2 rounded-sm text-[8px] md:text-[10px] font-black focus:border-[#4CB648] outline-none transition-colors" 
               />
-              <div className="w-32 bg-zinc-100 flex items-center justify-center font-black uppercase text-zinc-400 italic">
+              <div className="w-16 md:w-32 bg-zinc-100 flex items-center justify-center text-[8px] md:text-[10px] font-black uppercase text-zinc-400 italic">
                 {activeActivity ? activeActivity.unit : '-'}
               </div>
             </div>
@@ -202,27 +202,27 @@ export default function AddLogPage() {
 
           {selectedActivityId && (
             <div className="flex items-center justify-between py-6 border-t border-zinc-100">
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">Estimasi Progres Didapat:</span>
-              <span className="text-5xl font-black italic text-[#4CB648]">+{calculatedProgress}%</span>
+              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Estimasi Progres Didapat:</span>
+              <span className="text-[16px] md:text-[24px] font-black italic text-[#4CB648]">+{calculatedProgress}%</span>
             </div>
           )}
 
           <div className="space-y-4">
-            <label className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400">Catatan Petualangan (Opsional)</label>
+            <label className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Catatan Petualangan (Opsional)</label>
             <textarea 
               rows={3}
               placeholder="Bagaimana perasaanmu menyelesaikan ini?"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full bg-zinc-50 border-2 border-zinc-100 p-5 rounded-sm font-medium text-sm focus:border-[#4CB648] outline-none transition-colors resize-none"
+              className="w-full bg-zinc-50 border-2 border-zinc-100 p-5 rounded-sm font-medium text-[10px] md:text-[12px] focus:border-[#4CB648] outline-none transition-colors resize-none"
             />
           </div>
 
           <button 
             disabled={!selectedActivityId || isSubmitting}
-            className="w-full bg-[#4CB648] text-white p-5 rounded-sm font-black italic uppercase tracking-[0.2em] shadow-xl shadow-orange-500/20 flex justify-center items-center gap-3 hover:bg-[#047200] transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+            className="w-full bg-[#4CB648] text-white p-5 rounded-sm text-[8px] md:text-[10px] font-black italic uppercase tracking-[0.2em] shadow-xl shadow-orange-500/20 flex justify-center items-center gap-3 hover:bg-[#047200] transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
           >
-            {isSubmitting ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-6 h-6" />} 
+            {isSubmitting ? <Loader2 className="w-6 h-6 animate-spin" /> : <Save className="w-4 h-4 md:w-6 md:h-6" />} 
             {isSubmitting ? 'MENYIMPAN...' : 'SIMPAN LOG HARIAN'}
           </button>
         </form>

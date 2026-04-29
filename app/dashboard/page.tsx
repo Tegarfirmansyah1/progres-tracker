@@ -207,16 +207,16 @@ export default function Dashboard() {
       <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <h1 className="text-5xl font-black italic uppercase tracking-tighter leading-none">
+            <h1 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
               RINGKASAN <br /><span className="text-[#4CB648]">PERFORMA</span>
             </h1>
             <p className="text-zinc-500 text-[10px] italic font-black uppercase tracking-[0.2em] mt-4">
               1% LEBIH BAIK
             </p>
           </div>
-          <div className="bg-white border border-zinc-200 px-8 py-4 rounded-sm text-center shadow-sm">
+          <div className="bg-white border border-zinc-200 px-2 py-4 rounded-sm text-center shadow-sm">
             <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">STREAK</p>
-            <p className="text-3xl font-black italic">{totalStreak} <span className="text-xs">HARI</span></p>
+            <p className="text-2xl font-black italic">{totalStreak} <span className="text-sm">HARI</span></p>
           </div>
         </header>
 
@@ -253,18 +253,18 @@ export default function Dashboard() {
                           {bar.name}
                         </h4>
                         {/* Subjudul (Daftar Aktivitas) */}
-                        <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1.5">
+                        <p className="text-[8px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1.5">
                           Aktivitas: <span className="text-zinc-500">{bar.activities_summary}</span>
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="text-3xl font-black italic leading-none">{bar.current_progress.toFixed(1)}%</span>
+                      <span className="text-m md:text-3xl font-black italic leading-none">{bar.current_progress.toFixed(1)}%</span>
                     </div>
                   </div>
                   
                   {/* Visual Progress Bar */}
-                  <div className="relative h-6 bg-zinc-200 rounded-sm overflow-hidden border border-zinc-300 mt-3">
+                  <div className="relative h-5 bg-zinc-200 rounded-sm overflow-hidden border border-zinc-300 mt-3">
                     <div 
                       className={`h-full ${bar.color} transition-all duration-1000 ease-out`}
                       style={{ width: `${percentage}%` }}
@@ -289,7 +289,7 @@ export default function Dashboard() {
         {/* Tren Mingguan */}
         {weeklyIntensity.length > 0 && (
           <div className="mt-20 bg-white border border-zinc-200 p-8 rounded-sm shadow-sm">
-            <h3 className="font-black italic uppercase tracking-tight text-xl mb-8 flex items-center gap-3">
+            <h3 className="font-black italic uppercase tracking-tight text-sm md:text-xl mb-8 flex items-center gap-3">
               <TrendingUp className="text-[#4CB648]" /> Intensitas 7 Hari Terakhir
             </h3>
             <div className="flex items-end justify-between h-32 gap-3 border-b border-zinc-100 pb-2 relative">
@@ -308,7 +308,7 @@ export default function Dashboard() {
                         ${isToday ? 'bg-[#4CB648]' : 'bg-zinc-200'}
                       `} 
                     />
-                    <span className={`text-[9px] font-black uppercase mt-1 
+                    <span className={`text-[10px] font-black uppercase mt-1 
                       ${isToday ? 'text-[#4CB648]' : 'text-zinc-400'}
                     `}>
                       {data.day}

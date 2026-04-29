@@ -174,38 +174,38 @@ export default function SharePage() {
         {/* Kolom Kiri: Informasi & Kontrol */}
         <div className="flex-1">
           <header className="mb-10">
-            <h1 className="text-5xl font-black italic uppercase tracking-tighter leading-none mb-3">
+            <h1 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter leading-none mb-3">
               BAGIKAN <br /><span className="text-[#4CB648]">KEMENANGAN</span>
             </h1>
-            <p className="text-zinc-500 font-bold text-xs uppercase tracking-widest">
+            <p className="text-zinc-500 font-bold text-[8px] md:text-[10px] uppercase tracking-widest">
               Biarkan dunia tahu progres 1% Anda hari ini.
             </p>
           </header>
 
           <div className="bg-white p-8 border border-zinc-200 rounded-sm shadow-sm space-y-6">
             <div className="flex items-center gap-4 border-b border-zinc-100 pb-6">
-              <div className="w-12 h-12 bg-zinc-100 rounded-full flex items-center justify-center text-zinc-400">
-                <Camera className="w-6 h-6" />
+              <div className="w-14 h-7 md:w-12 md:h-12 bg-zinc-100 rounded-full flex items-center justify-center text-zinc-400">
+                <Camera className="w-4 h-4 md:w-6 md:h-6" />
               </div>
               <div>
-                <h3 className="font-black italic uppercase text-lg tracking-tight">Siap Untuk Media Sosial</h3>
-                <p className="text-xs text-zinc-500 font-medium">Rasio gambar sudah disesuaikan untuk Instagram Story (4:5).</p>
+                <h3 className="font-black italic uppercase text-[12px] md:text-[14px] tracking-tight">Siap Untuk Media Sosial</h3>
+                <p className="text-[10px] md:text-[12px] text-zinc-500 font-medium">Rasio gambar sudah disesuaikan untuk Instagram Story (4:5).</p>
               </div>
             </div>
 
             <button 
               onClick={handleDownloadImage}
               disabled={isDownloading}
-              className="w-full bg-[#4CB648] hover:bg-[#047200] text-white p-4 font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 rounded-sm transition-colors shadow-xl shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#4CB648] hover:bg-[#047200] text-white p-4 text-[8px] md:text-[10px] font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 rounded-sm transition-colors shadow-xl shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isDownloading ? (
                 <><div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> MEMPROSES GAMBAR...</>
               ) : (
-                <><Download className="w-5 h-5" /> UNDUH GAMBAR (PNG)</>
+                <><Download className="w-3 h-3 md:w-5 md:h-5" /> UNDUH GAMBAR (PNG)</>
               )}
             </button>
             
-            <p className="text-center text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-4">
+            <p className="text-center text-[8px] md:text-[12px] font-bold text-zinc-400 uppercase tracking-widest mt-4">
               JANGAN LUPA TAG <span className="text-[#4CB648]">@UPLY.APP</span>!
             </p>
           </div>
@@ -236,19 +236,19 @@ export default function SharePage() {
                           priority 
                         />
                   </div>
-                  <h2 className="font-black italic text-2xl uppercase tracking-tighter text-white">UPLY</h2>
+                  <h2 className="font-black italic text-[16px] md:text-[24px] uppercase tracking-tighter text-white">UPLY</h2>
                 </div>
-                <p className="text-[10px] text-[#FFFF] font-bold uppercase tracking-widest">{userName}&apos;s Progress</p>
+                <p className="text-[7px] md:text-[10px] text-[#FFFF] font-bold uppercase tracking-widest">{userName}&apos;s Progress</p>
               </div>
-              <div className="w-8 h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10">
-                <Activity className="w-4 h-4 text-white" />
+              <div className="w-4 h-4 md:w-10 md:h-8 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10">
+                <Activity className="w-4 h-4 md:w-6 md:h-6 text-white" />
               </div>
             </div>
 
             {/* Content: Progress Bars */}
             <div className="relative z-10 flex-1 flex flex-col justify-center space-y-6">
               {bars.length === 0 ? (
-                <p className="text-zinc-500 text-center font-bold text-xs uppercase tracking-widest">Belum ada data progres.</p>
+                <p className="text-zinc-500 text-center font-bold text-[8px] md:text-[10px] uppercase tracking-widest">Belum ada data progres.</p>
               ) : (
                 bars.map((bar) => {
                   const percentage = Math.min((bar.current_progress / bar.target_value) * 100, 100);
@@ -256,20 +256,20 @@ export default function SharePage() {
                     <div key={bar.id}>
                       <div className="flex justify-between items-end mb-2">
                         <div>
-                          <h4 className="font-black italic text-xl uppercase tracking-tight text-white leading-none">
+                          <h4 className="font-black italic text-[8px] md:text-[16px] uppercase tracking-tight text-white leading-none">
                             {bar.name}
                           </h4>
-                          <p className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest mt-1">
+                          <p className="text-[6px] md:text-[10px] font-bold text-zinc-300 uppercase tracking-widest mt-1">
                             {bar.activities_summary.length > 45 ? bar.activities_summary.substring(0, 45) + '...' : bar.activities_summary}
                           </p>
                         </div>
-                        <span className="text-2xl font-black italic text-white leading-none">
-                          {bar.current_progress.toFixed(1)}<span className="text-sm text-zinc-300">%</span>
+                        <span className="text-[10px] md:text-[16px] font-black italic text-white leading-none">
+                          {bar.current_progress.toFixed(1)}<span className="text-[8px] md:text-[10px] text-zinc-300">%</span>
                         </span>
                       </div>
                       
                       {/* Bar Visual */}
-                      <div className="relative h-4 bg-zinc-600 rounded-sm overflow-hidden border border-[#8b8b8b]">
+                      <div className="relative h-2 md:h-4 bg-zinc-600 rounded-sm overflow-hidden border border-[#8b8b8b]">
                         <div 
                           className={`h-full ${bar.color} transition-all duration-1000 ease-out`}
                           style={{ width: `${percentage}%` }}
@@ -284,16 +284,16 @@ export default function SharePage() {
             </div>
 
             {/* Footer Card */}
-            <div className="relative z-10 pt-6 border-t border-zinc-800 flex justify-between items-end mt-8">
+            <div className="relative z-10 pt-2 md:pt-6 border-t border-zinc-800 flex justify-between items-end mt-8">
               <div>
-                <p className="text-[12px] font-black italic uppercase tracking-widest text-[#4CB648] leading-none mb-1">
+                <p className="text-[6px] md:text-[10px] font-black italic uppercase tracking-widest text-[#4CB648] leading-none mb-1">
                   1% LEBIH BAIK.
                 </p>
-                <p className="text-[8px] font-bold text-zinc-300 uppercase tracking-widest">
+                <p className="text-[6px] md:text-[10px] font-bold text-zinc-300 uppercase tracking-widest">
                   {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </p>
               </div>
-              <p className="text-[10px] font-black text-white uppercase tracking-widest opacity-50">UPLY.app</p>
+              <p className="text-[6px] md:text-[10px] font-black text-white uppercase tracking-widest opacity-50">UPLY.app</p>
             </div>
             
           </div>

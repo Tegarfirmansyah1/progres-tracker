@@ -114,7 +114,7 @@ export default function HistoryPage() {
       <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 border-b border-zinc-200 pb-8">
           <div>
-            <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none">
+            <h1 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase leading-none">
               RIWAYAT <br />
               <span className="text-[#4CB648]">PETUALANGAN</span>
             </h1>
@@ -124,7 +124,7 @@ export default function HistoryPage() {
           </div>
         </header>
 
-        <div className="space-y-6">
+        <div className="space-y-5">
           {logs.length === 0 ? (
             <div className="bg-white border border-zinc-200 p-12 rounded-sm text-center shadow-sm">
               <Activity className="w-12 h-12 text-zinc-300 mx-auto mb-4" />
@@ -144,19 +144,19 @@ export default function HistoryPage() {
               const barColor = bar?.color || 'bg-zinc-200';
 
               return (
-                <div key={log.id} className="bg-white border border-zinc-200 p-6 md:p-8 rounded-sm shadow-sm hover:border-[#4CB648] transition-all group relative overflow-hidden">
+                <div key={log.id} className="bg-white border border-zinc-200 p-4 md:p-8 rounded-sm shadow-sm hover:border-[#4CB648] transition-all group relative overflow-hidden">
                   
                   {/* Accent Garis Kiri */}
                   <div className={`absolute top-0 left-0 w-1.5 h-full ${barColor}`} />
 
-                  <div className="flex justify-between items-start mb-6 pl-2">
+                  <div className="flex justify-between items-start mb-2 md:mb-6 pl-2">
                     <span className="flex items-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
                       <Clock className="w-4 h-4" /> {formatDateTime(log.created_at)}
                     </span>
-                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
                       <button 
                         onClick={() => handleDeleteLog(log.id)}
-                        className="p-2 text-zinc-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors"
+                        className="p-2 text-red-500 hover:text-red-900 hover:bg-red-50 rounded transition-colors"
                         title="Hapus Log"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -165,10 +165,10 @@ export default function HistoryPage() {
                   </div>
                   
                   <div className="pl-2">
-                    <h3 className="text-2xl font-black italic uppercase tracking-tight text-zinc-800 mb-1">
+                    <h3 className="text-xl font-black italic uppercase tracking-tight text-zinc-800 mb-1">
                       {act?.name || 'Aktivitas Dihapus'}
                     </h3>
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-6">
+                    <p className="text-[9px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-0.5 md:mb-6">
                       Kategori: <span style={{ color: barColor.replace('bg-', '') }} className="font-black">{bar?.name || '-'}</span>
                     </p>
                     
@@ -180,14 +180,14 @@ export default function HistoryPage() {
                     
                     <div className="grid grid-cols-2 gap-4 border-t border-zinc-50 pt-6">
                       <div>
-                        <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest">Pencapaian Asli</p>
-                        <p className="text-2xl font-black italic">
+                        <p className="text-[8px] md:text-[10px] font-black text-zinc-400 uppercase tracking-widest">Pencapaian Asli</p>
+                        <p className="text-sm md:text-2xl font-black italic">
                           {rawValue} <span className="text-sm text-zinc-500 font-bold">{act?.unit}</span>
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-[#4CB648]">Growth Diterima</p>
-                        <p className="text-2xl font-black italic text-[#4CB648]">+{log.progress_value.toFixed(1)}%</p>
+                        <p className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-[#4CB648]">Growth Diterima</p>
+                        <p className="text-sm md:text-2xl font-black italic text-[#4CB648]">+{log.progress_value.toFixed(1)}%</p>
                       </div>
                     </div>
                   </div>
