@@ -5,7 +5,6 @@ import { ChevronRight, TrendingUp, Zap, Loader2, Activity, LayoutDashboard, Plus
 
 import { supabase } from '@/lib/supabase';
 import Sidebar from '@/components/sidebar';
-import Image from 'next/image';
 
 interface DailyLog {
   progress_value: number;
@@ -116,7 +115,7 @@ export default function Dashboard() {
         )));
 
         let currentStreak = 0;
-        let dateToCheck = new Date();
+        const dateToCheck = new Date();
         const todayStr = formatDateStr(dateToCheck);
         
         const yesterdayDate = new Date();
@@ -200,12 +199,26 @@ export default function Dashboard() {
     );
   }
 
+  const handleLogout = async () => {
+      try {
+        // 1. Beritahu Supabase untuk menghancurkan sesi saat ini
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+        
+        // 2. Arahkan kembali ke halaman login
+        window.location.href = '/login';
+      } catch (error) {
+        console.error('Gagal keluar:', error);
+        alert('Gagal logout. Silakan coba lagi.');
+      }
+    };
+
   return (
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="dashboard" />
       
       <main className="flex-1 p-6 pb-24 md:p-12 md:pb-12 max-w-5xl mx-auto w-full">
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <header className="flex flex-row md:flex-row md:items-end gap-4 justify-between items-start mb-10">
           <div>
             <h1 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">
               RINGKASAN <br /><span className="text-[#4CB648]">PERFORMA</span>
@@ -214,11 +227,19 @@ export default function Dashboard() {
               1% LEBIH BAIK
             </p>
           </div>
-          <div className="bg-white border border-zinc-200 px-2 py-4 rounded-sm text-center shadow-sm">
-            <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">STREAK</p>
-            <p className="text-2xl font-black italic">{totalStreak} <span className="text-sm">HARI</span></p>
-          </div>
+
+          <button
+            onClick={handleLogout}
+            className="md:hidden shrink-0 flex items-center justify-center gap-2 px-2 py-2 text-red-500 hover:text-red-700 hover:bg-red-50 bg-white border border-zinc-200 rounded-sm shadow-sm active:scale-95 transition-all"
+            aria-label="Keluar Aplikasi">
+            <LogOut className="w-4 h-4" />
+          </button>
         </header>
+
+        <div className="bg-white p-4 border border-zinc-200 rounded-sm shadow-sm px-2 py-4 flex-1 max-w-25 text-center mb-10">
+          <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest mb-1">STREAK</p>
+          <p className="text-2xl font-black italic">{totalStreak} <span className="text-sm">HARI</span></p>
+        </div>
 
         {/* Progress Bars Section */}
         <div className="space-y-10">
@@ -296,25 +317,37 @@ export default function Dashboard() {
               {weeklyIntensity.map((data, index) => {
                 const isToday = index === 6; 
                 
-                return (
-                  <div key={index} className="flex-1 flex flex-col items-center gap-2 group relative">
-                    <div className="absolute -top-8 bg-zinc-900 text-white text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                       {data.height.toFixed(0)}%
-                    </div>
-
-                    <div 
-                      style={{ height: `${data.height}%`, minHeight: data.height > 0 ? '4px' : '0px' }} 
-                      className={`w-full max-w-[24px] rounded-t-sm transition-all duration-1000 ease-out group-hover:opacity-80 
-                        ${isToday ? 'bg-[#4CB648]' : 'bg-zinc-200'}
-                      `} 
-                    />
-                    <span className={`text-[10px] font-black uppercase mt-1 
-                      ${isToday ? 'text-[#4CB648]' : 'text-zinc-400'}
-                    `}>
-                      {data.day}
-                    </span>
+              return (
+                <div key={index} className="flex-1 flex flex-col items-center justify-end gap-2 h-full">
+                  {/* Bar Element */}
+                  <div 
+                    style={{ 
+                      height: `${data.height}%`, 
+                      // minHeight diperkecil agar data < 15% (seperti 5% dan 10%) tidak mentok di tinggi yang sama
+                      minHeight: data.height > 0 ? '14px' : '0px' 
+                    }} 
+                    className={`w-full max-w-[24px] rounded-t-sm transition-all duration-1000 ease-out flex items-start justify-center pt-0.5
+                      ${isToday ? 'bg-[#4CB648]' : 'bg-zinc-200'}
+                    `} 
+                  >
+                    {/* Teks Persentase di dalam Bar */}
+                    {data.height > 0 && (
+                      <span className={`text-[8px] font-black tracking-tighter
+                        ${isToday ? 'text-white' : 'text-zinc-600'}
+                      `}>
+                        {data.height.toFixed(0)}%
+                      </span>
+                    )}
                   </div>
-                );
+
+                  {/* Label Hari */}
+                  <span className={`text-[10px] font-black uppercase mt-1 
+                    ${isToday ? 'text-[#4CB648]' : 'text-zinc-400'}
+                  `}>
+                    {data.day}
+                  </span>
+                </div>
+              );
               })}
             </div>
             <p className="text-[10px] font-bold text-zinc-400 text-center mt-4 uppercase tracking-widest">

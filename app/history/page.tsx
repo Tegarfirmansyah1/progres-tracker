@@ -140,7 +140,7 @@ export default function HistoryPage() {
               // (Misal: progress_value di DB adalah 15%, weight adalah 1.5. Maka rawValue = 10 KM)
               const act = log.user_activities;
               const bar = act?.user_progress_bars;
-              const rawValue = act?.weight ? (log.progress_value / act.weight).toFixed(1) : 0;
+              const rawValue = act?.weight ? (log.progress_value * act.weight).toFixed(1) : 0;
               const barColor = bar?.color || 'bg-zinc-200';
 
               return (

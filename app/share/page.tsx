@@ -1,11 +1,15 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { LayoutDashboard, Plus, Calendar, Settings, LogOut, Zap, Share2, Loader2, Camera, Download, Activity } from 'lucide-react';
+import { Camera, Download, Activity, Loader2 } from 'lucide-react';
 
 import { supabase } from '@/lib/supabase';
 import Sidebar from '@/components/sidebar';
 import Image from 'next/image';
+
+// ==========================================
+// INTERFACES & MAIN COMPONENT
+// ==========================================
 
 interface DailyLog {
   progress_value: number;
@@ -45,10 +49,13 @@ export default function SharePage() {
   const fetchShareData = useCallback(async () => {
     try {
       setLoading(true);
-      
+
       const { data: { user }, error: authError } = await supabase.auth.getUser();
       if (authError || !user) return;
-      if (user.user_metadata?.name) setUserName(user.user_metadata.name);
+      
+      if (user.user_metadata?.name) {
+        setUserName(user.user_metadata.name);
+      }
 
       const { data: barsData, error } = await supabase
         .from('user_progress_bars')
@@ -68,12 +75,12 @@ export default function SharePage() {
       const calculatedBars = ((barsData as unknown as UserProgressBar[]) || []).map((bar) => {
         let totalProgress = 0;
         const activityDetails: string[] = [];
-        
+
         if (bar.user_activities) {
           bar.user_activities.forEach((act) => {
             let actRawTotal = 0;
             let hasLogs = false;
-
+            
             if (act.daily_logs && act.daily_logs.length > 0) {
               hasLogs = true;
               act.daily_logs.forEach((log) => {
@@ -83,7 +90,7 @@ export default function SharePage() {
                 }
               });
             }
-
+            
             if (act.name) {
               if (hasLogs) {
                 activityDetails.push(`${act.name} (${actRawTotal.toFixed(1)} ${act.unit || ''})`);
@@ -104,7 +111,16 @@ export default function SharePage() {
         };
       });
 
-      setBars(calculatedBars);
+      // MENGURUTKAN DAN MENGAMBIL MAKSIMAL 2 TERATAS
+      const topTwoBars = calculatedBars
+        .sort((a, b) => {
+          const percentageA = (a.current_progress / (a.target_value || 1)) * 100;
+          const percentageB = (b.current_progress / (b.target_value || 1)) * 100;
+          return percentageB - percentageA; 
+        })
+        .slice(0, 2); 
+
+      setBars(topTwoBars);
     } catch (error) {
       console.error("Gagal mengambil data untuk share:", error);
     } finally {
@@ -112,19 +128,17 @@ export default function SharePage() {
     }
   }, []);
 
-  useEffect(() => { 
-    fetchShareData(); 
+  useEffect(() => {
+    fetchShareData();
   }, [fetchShareData]);
 
-  // LOGIKA DOWNLOAD (Berpindah ke html-to-image agar mendukung warna Tailwind modern/oklch/lab)
+  // LOGIKA DOWNLOAD 
   const handleDownloadImage = async () => {
     const element = document.getElementById('share-card');
     if (!element) return;
-
     setIsDownloading(true);
-
+    
     try {
-      // Menginjeksi library html-to-image secara dinamis via CDN
       if (!(window as Window & { htmlToImage?: { toPng: (element: HTMLElement, options: { backgroundColor: string; pixelRatio: number }) => Promise<string> } }).htmlToImage) {
         await new Promise((resolve, reject) => {
           const script = document.createElement('script');
@@ -134,21 +148,18 @@ export default function SharePage() {
           document.head.appendChild(script);
         });
       }
-
+      
       const htmlToImage = (window as unknown as Window & { htmlToImage: { toPng: (element: HTMLElement, options: { backgroundColor: string; pixelRatio: number }) => Promise<string> } }).htmlToImage;
-
-      // Mengubah elemen HTML Card menjadi Kanvas Gambar
+      
       const dataUrl = await htmlToImage.toPng(element, {
         backgroundColor: '#09090b',
-        pixelRatio: 2, // Sama dengan scale: 2 di html2canvas (gambar resolusi tinggi)
+        pixelRatio: 2,
       });
-
-      // Memicu unduhan
+      
       const link = document.createElement('a');
       link.download = `UPLY-Progress-${new Date().getTime()}.png`;
       link.href = dataUrl;
       link.click();
-      
     } catch (error) {
       console.error('Gagal membuat gambar:', error);
       alert('Gagal mendownload gambar. Coba muat ulang halaman.');
@@ -168,9 +179,8 @@ export default function SharePage() {
   return (
     <div className="min-h-screen bg-zinc-50 flex font-sans text-zinc-900">
       <Sidebar activePage="share" />
-      
+
       <main className="flex-1 p-6 pb-24 md:p-12 max-w-5xl mx-auto w-full flex flex-col lg:flex-row gap-12">
-        
         {/* Kolom Kiri: Informasi & Kontrol */}
         <div className="flex-1">
           <header className="mb-10">
@@ -181,7 +191,7 @@ export default function SharePage() {
               Biarkan dunia tahu progres 1% Anda hari ini.
             </p>
           </header>
-
+          
           <div className="bg-white p-8 border border-zinc-200 rounded-sm shadow-sm space-y-6">
             <div className="flex items-center gap-4 border-b border-zinc-100 pb-6">
               <div className="w-14 h-7 md:w-12 md:h-12 bg-zinc-100 rounded-full flex items-center justify-center text-zinc-400">
@@ -192,8 +202,8 @@ export default function SharePage() {
                 <p className="text-[10px] md:text-[12px] text-zinc-500 font-medium">Rasio gambar sudah disesuaikan untuk Instagram Story (4:5).</p>
               </div>
             </div>
-
-            <button 
+            
+            <button
               onClick={handleDownloadImage}
               disabled={isDownloading}
               className="w-full bg-[#4CB648] hover:bg-[#047200] text-white p-4 text-[8px] md:text-[10px] font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 rounded-sm transition-colors shadow-xl shadow-orange-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -204,37 +214,37 @@ export default function SharePage() {
                 <><Download className="w-3 h-3 md:w-5 md:h-5" /> UNDUH GAMBAR (PNG)</>
               )}
             </button>
-            
+
             <p className="text-center text-[8px] md:text-[12px] font-bold text-zinc-400 uppercase tracking-widest mt-4">
               JANGAN LUPA TAG <span className="text-[#4CB648]">@UPLY.APP</span>!
             </p>
           </div>
         </div>
 
-        {/* Kolom Kanan: PREVIEW CARD (Bisa didownload sebagai gambar) */}
+        {/* Kolom Kanan: PREVIEW CARD */}
         <div className="flex-1 flex justify-center lg:justify-end items-center">
-          
-          <div 
-            id="share-card" 
+          <div
+            id="share-card"
             className="w-full max-w-sm aspect-[4/5] bg-zinc-950 border border-zinc-800 rounded-xl p-8 relative overflow-hidden shadow-2xl flex flex-col"
           >
             {/* Dekorasi Background Glow */}
             <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#85EB4E] opacity-32 blur-[100px] rounded-full pointer-events-none" />
             <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-[#85EB4E] opacity-32 blur-[100px] rounded-full pointer-events-none" />
-
+            
             {/* Header Card */}
             <div className="flex justify-between items-start relative z-10 mb-8">
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
-                  <div className="bg-[#4ED99C] p-1 rounded-sm">
+                  <div className="bg-[#4ED99C] p-1 rounded-sm flex items-center justify-center">
+                    {/* Mengganti next/image dengan img tag HTML biasa untuk mode preview */}
                     <Image 
-                          src="/uply.png" 
-                          alt="Uply Logo"
-                          width={18}  
-                          height={18}
-                          className="object-contain"
-                          priority 
-                        />
+                                    src="/uply.png" 
+                                    alt="Uply Logo"
+                                    width={24}  
+                                    height={24}
+                                    className="object-contain"
+                                    priority 
+                                  />
                   </div>
                   <h2 className="font-black italic text-[16px] md:text-[24px] uppercase tracking-tighter text-white">UPLY</h2>
                 </div>
@@ -267,10 +277,10 @@ export default function SharePage() {
                           {bar.current_progress.toFixed(1)}<span className="text-[8px] md:text-[10px] text-zinc-300">%</span>
                         </span>
                       </div>
-                      
+
                       {/* Bar Visual */}
                       <div className="relative h-2 md:h-4 bg-zinc-600 rounded-sm overflow-hidden border border-[#8b8b8b]">
-                        <div 
+                        <div
                           className={`h-full ${bar.color} transition-all duration-1000 ease-out`}
                           style={{ width: `${percentage}%` }}
                         >
@@ -295,10 +305,9 @@ export default function SharePage() {
               </div>
               <p className="text-[6px] md:text-[10px] font-black text-white uppercase tracking-widest opacity-50">UPLY.app</p>
             </div>
-            
+
           </div>
         </div>
-
       </main>
     </div>
   );

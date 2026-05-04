@@ -88,10 +88,10 @@ export default function LoginPage() {
       {/* Kotak Form Login */}
       <div className="w-full max-w-md bg-white border border-zinc-200 p-8 md:p-10 rounded-sm shadow-xl">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-black italic uppercase tracking-tight text-zinc-900">
+          <h1 className="text-m md:text-2xl font-black italic uppercase tracking-tight text-zinc-900">
             MASUK KE BASECAMP
           </h1>
-          <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-2">
+          <p className="text-[8px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-2">
             Lanjutkan petualangan 1% Anda hari ini.
           </p>
         </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className="space-y-6">
           {/* Input Email */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">
+            <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">
               Alamat Email
             </label>
             <input 
@@ -107,13 +107,13 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="atlet@uplay.app"
-              className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
+              className="w-full text-[10px] md:text-[10px] bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
             />
           </div>
 
           {/* Input Password */}
           <div>
-            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">
+            <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">
               Kata Sandi
             </label>
             <input 
@@ -121,7 +121,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
+              className="w-full text-[10px] md:text-[10px] bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
             />
           </div>
 
@@ -129,12 +129,12 @@ export default function LoginPage() {
           <button 
             type="submit" 
             disabled={isLoading}
-            className="w-full bg-zinc-900 text-white p-4 font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 hover:bg-black transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-zinc-900 text-white p-4 font-black italic uppercase tracking-widest text-[8px] md:text-[10px] flex justify-center items-center gap-3 hover:bg-black transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="md:w-5 md:h-5 w-3 h-3" />
             )} 
             {isLoading ? 'MEMVERIFIKASI...' : 'MULAI PETUALANGAN'}
           </button>
@@ -146,7 +146,7 @@ export default function LoginPage() {
             <div className="w-full border-t border-zinc-100"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-3 bg-white text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
+            <span className="px-3 bg-white text-[8px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest">
               Atau lanjutkan dengan
             </span>
           </div>
@@ -157,9 +157,9 @@ export default function LoginPage() {
           type="button"
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="mt-6 w-full bg-white border-2 border-zinc-100 hover:bg-zinc-50 hover:border-zinc-200 text-zinc-900 p-4 font-black italic uppercase tracking-widest text-sm flex justify-center items-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="mt-6 w-full bg-white border-2 border-zinc-100 hover:bg-zinc-50 hover:border-zinc-200 text-zinc-900 p-4 font-black italic uppercase tracking-widest text-[8px] md:text-[10px] flex justify-center items-center gap-3 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <svg viewBox="0 0 24 24" className="w-5 h-5" aria-hidden="true">
+          <svg viewBox="0 0 24 24" className="md:w-5 md:h-5 h-3 w-3" aria-hidden="true">
             <path d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z" fill="#EA4335" />
             <path d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z" fill="#4285F4" />
             <path d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z" fill="#FBBC05" />
@@ -171,7 +171,7 @@ export default function LoginPage() {
       </div>
       
       {/* Footer / Info Tambahan */}
-      <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-8">
+      <p className="text-[8px] md:text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-8">
         Belum punya akun? <a href="/register" className="text-[#4CB648] hover:underline">Daftar di sini</a>
       </p>
 

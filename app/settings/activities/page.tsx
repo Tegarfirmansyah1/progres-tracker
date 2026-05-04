@@ -248,8 +248,8 @@ export default function SettingsPage() {
 
             <form onSubmit={handleSubmitBar} className="bg-white p-8 border border-zinc-200 rounded-sm shadow-sm space-y-6">
               <div>
-                <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Nama Bar (Cth: Finansial)</label>
-                <input type="text" value={newBarName} onChange={(e) => setNewBarName(e.target.value)} placeholder="NAMA BAR" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 font-bold text-[8px] md:text-[8px] outline-none focus:border-[#4CB648] transition-colors" />
+                <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Nama Bar</label>
+                <input type="text" value={newBarName} onChange={(e) => setNewBarName(e.target.value)} placeholder="NAMA BAR (cth: Olahraga)" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 font-bold text-[8px] md:text-[14px] outline-none focus:border-[#4CB648] transition-colors" />
               </div>
               <div>
                 <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Target Maksimal</label>
@@ -324,7 +324,7 @@ export default function SettingsPage() {
               
               <div>
                 <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Pilih Bar Induk</label>
-                <select value={selectedBarId} onChange={(e) => setSelectedBarId(e.target.value)} className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[8px] md:text-[10px] font-bold outline-none focus:border-[#4CB648] transition-colors appearance-none">
+                <select value={selectedBarId} onChange={(e) => setSelectedBarId(e.target.value)} className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[8px] md:text-[14px] font-bold outline-none focus:border-[#4CB648] transition-colors appearance-none">
                   <option value="" disabled>-- PILIH BAR INDUK --</option>
                   {parentBars.map(bar => <option key={bar.id} value={bar.id}>{bar.name}</option>)}
                 </select>
@@ -332,17 +332,41 @@ export default function SettingsPage() {
               
               <div>
                 <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Nama Aktivitas</label>
-                <input type="text" value={newActivityName} onChange={(e) => setNewActivityName(e.target.value)} placeholder="CTH: LARI PAGI" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[8px] md:text-[10px] font-bold outline-none focus:border-[#4CB648] transition-colors" />
+                <input type="text" value={newActivityName} onChange={(e) => setNewActivityName(e.target.value)} placeholder="CTH: LARI PAGI" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[8px] md:text-[14px] font-bold outline-none focus:border-[#4CB648] transition-colors" />
               </div>
               
               <div className="grid grid-cols-2 gap-4">
+                <div>
+                    <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block" title="Berapa unit yang harus dilakukan untuk mendapat 1%">
+                      Weight
+                    </label>
+                  <div className="relative">
+                    <input 
+                      type="number" 
+                      step="0.1" 
+                      value={newActivityWeight} 
+                      onChange={(e) => setNewActivityWeight(e.target.value === '' ? '' : Number(e.target.value))} 
+                      className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[8px] md:text-[12px] font-bold outline-none focus:border-[#4CB648] transition-colors" 
+                    />
+
+                      {newActivityWeight === '' && (
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 font-bold text-[14px] select-none">
+                        
+                        <span className="md:hidden p-2 text-[8px] md:text-[12px] font-bold ">Misal: 2</span>
+                        
+                        <span className="hidden md:inline p-2 text-[8px] md:text-[12px] font-bold">Misal: 2 (Artinya 2 unit = 1%)</span>
+                        
+                      </div>
+                    )}
+                    </div>
+                  </div>
                 <div>
                   <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Satuan</label>
                   <div className="relative">
                     <select 
                       value={newActivityUnit} 
                       onChange={(e) => setNewActivityUnit(e.target.value)} 
-                      className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[6px] md:text-[10px] font-bold outline-none focus:border-[#4CB648] transition-colors appearance-none"
+                      className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[6px] md:text-[12px] font-bold outline-none focus:border-[#4CB648] transition-colors appearance-none"
                     >
                       <option value="" disabled>-- PILIH --</option>
                       <option value="KM">Kilometer (KM)</option>
@@ -356,10 +380,6 @@ export default function SettingsPage() {
                     </select>
                     <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-2 h-2 md:w-5 md:h-5 text-zinc-400 pointer-events-none" />
                   </div>
-                </div>
-                <div>
-                  <label className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">Bobot (%/Satuan)</label>
-                  <input type="number" step="0.1" value={newActivityWeight} onChange={(e) => setNewActivityWeight(e.target.value === '' ? '' : Number(e.target.value))} placeholder="1.0" className="w-full bg-zinc-50 border-2 border-zinc-100 p-4 text-[8px] md:text-[10px] font-bold outline-none focus:border-[#4CB648] transition-colors" />
                 </div>
               </div>
               
@@ -398,7 +418,7 @@ export default function SettingsPage() {
                             <div>
                               <h5 className="font-black italic uppercase tracking-tight text-zinc-800">{act.name}</h5>
                               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">
-                                Konversi: <span className="text-[#4CB648]">1 {act.unit} = {act.weight}%</span>
+                                Konversi: <span className="text-[#4CB648]">{act.weight} {act.unit} = 1%</span>
                               </p>
                             </div>
                             <div className="flex items-center gap-1">

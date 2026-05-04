@@ -64,7 +64,7 @@ export default function Sidebar({ activePage = 'dashboard' }: SidebarProps) {
                                   priority 
                                 />
           </div>
-          <span className="hidden lg:block font-black italic text-xl tracking-tighter uppercase">STRIDE</span>
+          <span className="hidden lg:block font-black italic text-xl tracking-tighter uppercase">UPLY</span>
         </div>
         
         <nav className="flex-1 space-y-1 px-3">
