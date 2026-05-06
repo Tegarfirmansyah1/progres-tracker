@@ -115,11 +115,11 @@ export default function LandingPage() {
                       priority 
                     />
             <span className="font-black text-xl italic tracking-tighter uppercase">UPLY</span>
-            <Link href="/privacy" className="text-[#ff6b00] hover:underline mt-2 inline-block">
-              Privacy Policy
-            </Link>
           </div>
           <p className="text-zinc-400 text-[10px] md:text-[12px] italic">&copy; 2026 UPLY PROGRES TRACKER. 1% LEBIH BAIK.</p>
+        <Link href="/privacy" className="text-[#ff6b00] hover:underline mt-2 inline-block">
+              Privacy Policy
+            </Link>
         </div>
       </footer>
     </div>
