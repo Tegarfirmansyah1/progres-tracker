@@ -40,34 +40,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setIsLoading(true);
-
-    try {
-      // Proses autentikasi OAuth Google ke Supabase
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          // Supabase akan mengarahkan user kembali ke URL ini setelah login sukses
-          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : undefined
-        }
-      });
-
-      if (error) throw error;
-      
-      // Catatan: Tidak perlu redirect manual di sini karena signInWithOAuth 
-      // akan otomatis melempar user ke halaman Google.
-
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Terjadi kesalahan saat menghubungi Google.';
-      alert(`Gagal Login dengan Google: ${errorMessage}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-
-      const clientId = "CLIENT_ID_GOOGLE_KAMU.apps.googleusercontent.com";
+      const clientId = "358358205220-3pmhf2a41hglq4causm7ieddjmbdprfq.apps.googleusercontent.com";
 
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col justify-center items-center font-sans p-6">
