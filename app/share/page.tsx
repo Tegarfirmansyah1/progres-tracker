@@ -36,6 +36,7 @@ interface ProgressBarData {
   target_value: number;
   color: string;
   current_progress: number;
+  weighted_progress: number;
   activities_summary: string;
 }
 
@@ -72,6 +73,8 @@ export default function SharePage() {
 
       if (error) throw error;
 
+      
+
       const calculatedBars = ((barsData as unknown as UserProgressBar[]) || []).map((bar) => {
         let totalProgress = 0;
         const activityDetails: string[] = [];
@@ -86,7 +89,7 @@ export default function SharePage() {
               act.daily_logs.forEach((log) => {
                 totalProgress += (log.progress_value || 0);
                 if (act.weight && act.weight > 0) {
-                  actRawTotal += (log.progress_value || 0) / act.weight;
+                  actRawTotal += (log.progress_value || 0) * act.weight;
                 }
               });
             }
@@ -107,6 +110,7 @@ export default function SharePage() {
           target_value: bar.target_value,
           color: bar.color,
           current_progress: totalProgress,
+          weighted_progress: totalProgress,
           activities_summary: activityDetails.join(', ') || 'Belum ada aktivitas'
         };
       });

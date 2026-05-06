@@ -106,6 +106,7 @@ export default function LoginPage() {
               type="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              suppressHydrationWarning
               placeholder="atlet@uplay.app"
               className="w-full text-[10px] md:text-[10px] bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
             />
@@ -120,6 +121,7 @@ export default function LoginPage() {
               type="password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              suppressHydrationWarning
               placeholder="••••••••"
               className="w-full text-[10px] md:text-[10px] bg-zinc-50 border-2 border-zinc-100 p-4 font-bold outline-none focus:border-[#4CB648] transition-colors"
             />
@@ -129,6 +131,7 @@ export default function LoginPage() {
           <button 
             type="submit" 
             disabled={isLoading}
+            suppressHydrationWarning
             className="w-full bg-zinc-900 text-white p-4 font-black italic uppercase tracking-widest text-[8px] md:text-[10px] flex justify-center items-center gap-3 hover:bg-black transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isLoading ? (

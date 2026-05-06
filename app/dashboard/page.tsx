@@ -98,7 +98,13 @@ export default function Dashboard() {
         };
       });
 
-      setBars(calculatedBars);
+      const sortedBars = calculatedBars.sort((a, b) => {
+        const aRatio = a.target_value ? a.current_progress / a.target_value : a.current_progress;
+        const bRatio = b.target_value ? b.current_progress / b.target_value : b.current_progress;
+        return bRatio - aRatio;
+      });
+
+      setBars(sortedBars);
 
       // 2. Fetch Daily Logs untuk STREAK & INTENSITAS
       const { data: allLogs } = await supabase
